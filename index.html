@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7fb">
+  <meta name="description" content="Organizador semanal escolar de Adrián y Héctor">
+  <title>Semana escolar · Adrián y Héctor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">📚 ORGANIZADOR ESCOLAR</span>
+        <h1>La semana de <span>Adrián y Héctor</span></h1>
+        <p>Todo lo que necesitan para ir preparados al cole, de un vistazo.</p>
+      </div>
+      <div class="today-pill" id="todayPill"></div>
+    </header>
+
+    <section class="week-toolbar" aria-label="Navegación de semanas">
+      <button class="nav-button" id="previousWeek" aria-label="Semana anterior">‹</button>
+      <div class="week-title">
+        <strong id="weekLabel"></strong>
+        <span id="weekRange"></span>
+      </div>
+      <button class="nav-button" id="nextWeek" aria-label="Semana siguiente">›</button>
+      <button class="today-button" id="currentWeek">Hoy</button>
+    </section>
+
+    <section class="today-summary" id="todaySummary"></section>
+
+    <section class="week-grid" id="weekGrid" aria-live="polite"></section>
+
+    <footer>
+      <span>🏃 Chándal</span>
+      <span>🧥 Uniforme de calle</span>
+      <span>🏊 Piscina</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
