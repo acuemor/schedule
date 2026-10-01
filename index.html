@@ -7,6 +7,58 @@
 <link rel="stylesheet" href="styles.css"></head><body><main class="app-shell">
 <header class="hero"><div><span class="eyebrow">📚 ORGANIZADOR FAMILIAR</span><h1>La semana de <span>los peques</span></h1><p>Uniformes, piscina, extraescolares y eventos, de un vistazo.</p></div><div class="today-pill" id="todayPill"></div></header>
 <section class="week-toolbar"><button class="nav-button" id="previousWeek" aria-label="Semana anterior">‹</button><div class="week-title"><strong id="weekLabel"></strong><span id="weekRange"></span></div><button class="nav-button" id="nextWeek" aria-label="Semana siguiente">›</button><button class="today-button" id="currentWeek">Hoy</button></section>
+<section class="setup-warning" id="setupWarning" hidden>
+  <h2>Falta configurar la conexión con Supabase</h2>
+  <p>Completa <code>supabase-config.js</code> con la URL, la clave pública y el identificador de familia siguiendo el README.</p>
+</section>
+<section class="auth-panel" id="authPanel" hidden>
+  <div class="auth-card">
+    <span class="eyebrow">🔐 ACCESO FAMILIAR</span>
+    <h2>Inicia sesión</h2>
+    <p>Los horarios y eventos se comparten entre las dos cuentas familiares.</p>
+    <form id="authForm">
+      <input type="hidden" id="authAction" value="login">
+      <label>Correo electrónico<input id="authEmail" type="email" autocomplete="email" required placeholder="nombre@correo.com"></label>
+      <label>Contraseña<input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label>
+      <button class="primary-button" id="authSubmit" type="submit">Iniciar sesión</button>
+    </form>
+    <button class="text-button" id="authMode" type="button">Crear cuenta</button>
+    <p id="authMessage" class="auth-message" aria-live="polite"></p>
+  </div>
+</section>
+<div id="appContent" hidden>
+<div class="account-bar"><span>Conectado como <strong id="userEmail"></strong></span><span id="cloudStatus" data-state="ok" aria-live="polite">Conectando…</span><button class="text-button" id="signOut" type="button">Cerrar sesión</button></div>
+<div class="config-toolbar">
+  <button class="config-button" id="toggleConfig" aria-expanded="false" aria-controls="configPanel">⚙️ Configurar calendario</button>
+</div>
+<section class="config-panel" id="configPanel" hidden>
+  <div class="config-heading">
+    <div><span class="eyebrow">PERSONALIZA TU CALENDARIO</span><h2>Configuración</h2><p>Los cambios se guardan en la base de datos familiar y se sincronizan con el otro dispositivo.</p></div>
+    <button class="close-config" id="closeConfig" aria-label="Cerrar configuración">✕</button>
+  </div>
+  <div class="config-section">
+    <div class="section-heading"><div><h3>Niños y horarios</h3><p>Configura la ropa, piscina y extraescolares de cada día.</p></div><button class="secondary-button" id="addChild">＋ Añadir niño</button></div>
+    <div id="childrenEditor"></div>
+    <div class="editor-actions"><button class="primary-button" id="saveSchedule">Guardar horarios</button><span class="save-status" id="scheduleStatus" aria-live="polite"></span></div>
+  </div>
+  <div class="config-section">
+    <div class="section-heading"><div><h3>Eventos puntuales</h3><p>Excursiones, festivales, cumpleaños y otros avisos.</p></div></div>
+    <form id="eventForm" class="event-form">
+      <input type="hidden" id="editingEventId">
+      <label>Fecha<input type="date" id="eventDate" required></label>
+      <label>Para<select id="eventChild"></select></label>
+      <label class="event-title-field">Descripción<input type="text" id="eventTitle" placeholder="Ej. Excursión a la granja" maxlength="80" required></label>
+      <label class="event-icon-field">Icono<input type="text" id="eventIcon" placeholder="📌" maxlength="4"></label>
+      <div class="event-form-actions"><button class="primary-button" type="submit" id="eventSubmit">Añadir evento</button><button class="text-button" type="button" id="cancelEventEdit" hidden>Cancelar edición</button></div>
+    </form>
+    <div id="eventsEditor" class="events-editor"></div>
+  </div>
+  <div class="config-section backup-section">
+    <div class="section-heading"><div><h3>Copia de seguridad</h3><p>Exporta o importa la configuración para trasladarla a otro navegador o dispositivo.</p></div></div>
+    <div class="backup-actions"><button class="secondary-button" id="exportConfig">⬇ Exportar configuración</button><label class="secondary-button import-button">⬆ Importar configuración<input type="file" id="importConfig" accept="application/json,.json" hidden></label></div>
+    <p class="storage-note">La base de datos de Supabase es la fuente única de la verdad. Ambos podéis consultar y modificar la misma configuración desde vuestros dispositivos.</p>
+  </div>
+</section>
 <div class="view-options">
   <label class="toggle-control" for="showWeekend">
     <span class="toggle-copy"><strong>Mostrar fines de semana</strong><small>Activa sábado y domingo en el calendario</small></span>
@@ -16,4 +68,4 @@
 </div>
 <section class="today-summary" id="todaySummary"></section><section class="week-grid" id="weekGrid" aria-live="polite"></section>
 <footer><span>🏃 Chándal</span><span>🧥 Uniforme</span><span>🏊 Piscina</span><span>⭐ Extraescolar</span><span>📌 Evento</span></footer>
-</main><script src="config.js"></script><script src="script.js"></script></body></html>
+</div></main><script src="config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="script.js"></script></body></html>

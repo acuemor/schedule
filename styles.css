@@ -33,3 +33,73 @@ footer{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 24px;margin-t
 .toggle-control input:focus-visible+.toggle-track{outline:3px solid #a9a2f0;outline-offset:3px}
 @media(max-width:1250px){.week-grid.full-week{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:700px){.week-grid.full-week{grid-template-columns:1fr}.view-options{justify-content:center}.toggle-copy{text-align:left}}
+
+
+.config-toolbar{display:flex;justify-content:flex-end;margin:0 0 14px}
+.config-button,.primary-button,.secondary-button,.text-button,.close-config,.text-danger{border:0;cursor:pointer;font:inherit;font-weight:900}
+.config-button{padding:12px 18px;border-radius:14px;background:var(--ink);color:white;box-shadow:var(--shadow)}
+.config-panel{margin:0 0 22px;padding:clamp(16px,3vw,28px);border:1px solid var(--line);border-radius:24px;background:#fff;box-shadow:var(--shadow)}
+.config-panel[hidden]{display:none}
+.config-heading,.section-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.config-heading{margin-bottom:20px}
+.config-heading h2{margin:9px 0 4px;font-size:1.8rem}
+.config-heading p,.section-heading p{margin:0;color:var(--muted);font-size:.9rem;font-weight:700}
+.close-config{width:38px;height:38px;border-radius:12px;background:var(--bg);color:var(--ink)}
+.config-section{padding:20px 0;border-top:1px solid var(--line)}
+.config-section:first-of-type{border-top:0}
+.section-heading{align-items:center;margin-bottom:14px}
+.section-heading h3{margin:0 0 3px;font-size:1.2rem}
+.primary-button,.secondary-button{padding:10px 15px;border-radius:12px}
+.primary-button{background:var(--purple);color:white}
+.secondary-button{background:var(--purple-soft);color:var(--purple)}
+.child-editor{margin:14px 0;padding:16px;border:1px solid var(--line);border-radius:17px;background:#fcfcff}
+.child-editor-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:12px}
+.child-name-field,.event-form label,.day-edit-row label{display:grid;gap:5px;color:var(--muted);font-size:.76rem;font-weight:900}
+.child-name-field input{width:min(100%,320px);font-weight:900}
+input[type="text"],input[type="date"],select{min-width:0;padding:9px 10px;border:1px solid #dfe2ec;border-radius:10px;background:white;color:var(--ink);font:inherit;font-size:.88rem}
+input:focus,select:focus{outline:3px solid #e3e0ff;border-color:var(--purple)}
+.text-danger{padding:8px 10px;background:#fff0f2;color:#b84e66;border-radius:10px;font-size:.8rem}
+.day-edit-grid{display:grid;gap:7px}
+.day-edit-row{display:grid;grid-template-columns:100px minmax(145px,1fr) minmax(110px,.8fr) minmax(190px,1.5fr);align-items:center;gap:12px;padding:9px 10px;border-radius:12px;background:white}
+.day-edit-row>strong{font-size:.86rem}
+.day-edit-row label{font-size:.7rem}
+.pool-check{display:flex!important;align-items:center;gap:7px!important;color:var(--ink)!important}
+.pool-check input{width:17px;height:17px;accent-color:var(--purple)}
+.editor-actions{display:flex;align-items:center;gap:12px;margin-top:14px}
+.save-status{color:#23825c;font-size:.85rem;font-weight:900}
+.event-form{display:grid;grid-template-columns:150px 150px minmax(180px,1fr) 90px auto;align-items:end;gap:10px;padding:15px;border-radius:16px;background:#fcfcff;border:1px solid var(--line)}
+.event-form-actions{display:flex;gap:6px;align-items:center}
+.event-form-actions button{white-space:nowrap}
+.text-button{padding:8px 10px;background:transparent;color:var(--purple);font-size:.82rem}
+.events-editor{display:grid;gap:7px;margin-top:12px}
+.event-edit-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+.event-edit-icon{font-size:1.35rem}
+.event-edit-copy{display:grid;gap:2px;flex:1;min-width:0}
+.event-edit-copy strong{overflow-wrap:anywhere}
+.event-edit-copy span,.storage-note{color:var(--muted);font-size:.78rem;font-weight:700}
+.empty-state{padding:14px;border-radius:12px;background:#f7f7fb;color:var(--muted);font-weight:700}
+.backup-actions{display:flex;flex-wrap:wrap;gap:9px}
+.import-button{display:inline-flex;align-items:center}
+.storage-note{margin:12px 0 0;line-height:1.5}
+@media(max-width:1050px){.day-edit-row{grid-template-columns:90px 1fr 1fr}.activity-edit{grid-column:2/-1}.event-form{grid-template-columns:1fr 1fr}.event-title-field{grid-column:1/2}.event-icon-field{grid-column:2/3}.event-form-actions{grid-column:1/-1}}
+@media(max-width:650px){.config-toolbar{justify-content:stretch}.config-button{width:100%}.config-heading h2{font-size:1.5rem}.section-heading{align-items:flex-start;flex-direction:column}.child-editor{padding:12px}.day-edit-row{grid-template-columns:1fr 1fr;gap:8px}.day-edit-row>strong{grid-column:1/-1}.activity-edit{grid-column:1/-1}.event-form{grid-template-columns:1fr 1fr}.event-form label:first-of-type,.event-title-field{grid-column:1/-1}.event-form-actions{grid-column:1/-1;flex-wrap:wrap}.event-edit-item{flex-wrap:wrap}.event-edit-copy{flex-basis:calc(100% - 50px)}.event-edit-item button{margin-left:auto}.editor-actions{align-items:flex-start;flex-direction:column}}
+
+
+/* Supabase: acceso, estado de sincronización y configuración inicial */
+[hidden] { display: none !important; }
+.auth-panel { display: grid; place-items: center; padding: 30px 16px; }
+.auth-card, .setup-warning { width: min(100%, 440px); margin: 0 auto 22px; padding: 26px; border-radius: 22px; background: #fff; box-shadow: 0 12px 36px rgba(28, 39, 70, .09); }
+.auth-card h2, .setup-warning h2 { margin: 8px 0; }
+.auth-card p, .setup-warning p { color: #667085; line-height: 1.5; }
+.auth-card form { display: grid; gap: 14px; margin: 18px 0 12px; }
+.auth-card label { display: grid; gap: 6px; font-weight: 700; }
+.auth-card input { width: 100%; box-sizing: border-box; padding: 12px 13px; border: 1px solid #d8deea; border-radius: 10px; font: inherit; }
+.auth-message { min-height: 20px; font-size: .9rem; overflow-wrap: anywhere; }
+.account-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 16px; padding: 11px 14px; border-radius: 12px; background: #fff; color: #596579; font-size: .88rem; }
+#cloudStatus[data-state="ok"] { color: #16804a; }
+#cloudStatus[data-state="saving"] { color: #9a6700; }
+#cloudStatus[data-state="error"] { color: #b42318; }
+.setup-warning { margin-top: 28px; }
+@media (max-width: 600px) {
+  .account-bar { align-items: flex-start; flex-direction: column; }
+}
