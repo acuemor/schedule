@@ -1,29 +1,34 @@
-// Configuración del calendario escolar.
-// Los días se escriben por su nombre para que sea fácil modificarlo.
-// Valores admitidos: monday, tuesday, wednesday, thursday, friday.
-
+// Días: monday, tuesday, wednesday, thursday, friday.
 const schedule = {
   adrian: {
     name: 'Adrián',
-    clothing: {
-      uniform: ['monday', 'wednesday'],
-      tracksuit: ['tuesday', 'thursday', 'friday'],
-    },
+    clothing: { uniform: ['monday', 'wednesday'], tracksuit: ['tuesday', 'thursday', 'friday'] },
     pool: ['friday'],
-    activities: {
-      taekwondo: ['monday', 'wednesday', 'friday'],
-    },
+    activities: { taekwondo: ['monday', 'wednesday', 'friday'] },
   },
-
   hector: {
     name: 'Héctor',
-    clothing: {
-      tracksuit: ['monday', 'wednesday', 'thursday'],
-      uniform: ['tuesday', 'friday'],
-    },
+    clothing: { tracksuit: ['monday', 'wednesday', 'thursday'], uniform: ['tuesday', 'friday'] },
     pool: ['monday'],
-    activities: {
-      music: ['thursday'],
-    },
+    activities: { music: ['thursday'] },
+  },
+  // Rodrigo queda creado; completa sus días cuando quieras.
+  rodrigo: {
+    name: 'Rodrigo',
+    clothing: { uniform: [], tracksuit: [] },
+    pool: [],
+    activities: {},
   },
 };
+
+// Eventos puntuales: fecha AAAA-MM-DD. child puede ser una clave de schedule o 'all'.
+const events = [
+  { date: '2026-10-30', child: 'adrian', title: 'Disfraz Halloween', icon: '🎃' },
+  { date: '2026-10-30', child: 'hector', title: 'Disfraz Halloween', icon: '🎃' },
+  { date: '2026-12-18', child: 'adrian', title: 'Festival de Navidad', icon: '🎄' },
+  { date: '2026-12-18', child: 'hector', title: 'Festival de Navidad', icon: '🎄' },
+  { date: '2026-12-18', child: 'rodrigo', title: 'Festival de Navidad', icon: '🎄' },
+  { date: '2026-11-18', child: 'adrian', title: 'Teatro ratoncito pérez', icon: '🎭' },
+  { date: '2027-01-15', child: 'adrian', title: 'Excursión arqueopinto', icon: '🚌' },
+  { date: '2027-06-10', child: 'adrian', title: 'Graduación', icon: '🎓' },
+];

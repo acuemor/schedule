@@ -1,32 +1,28 @@
-# Semana escolar · Adrián y Héctor
+# Organizador semanal familiar
 
-Organizador semanal estático para GitHub Pages.
+Web estática para GitHub Pages.
 
-## Ficheros
+## Archivos
+- `index.html`: estructura.
+- `styles.css`: estilos responsive.
+- `config.js`: niños, horarios y eventos puntuales.
+- `script.js`: lógica de calendario.
 
-- `index.html`: estructura de la página.
-- `styles.css`: diseño responsive.
-- `config.js`: configuración del calendario.
-- `script.js`: lógica de la aplicación.
+## Rodrigo
+Rodrigo está añadido, pero sus días de uniforme, chándal, piscina y actividades quedan sin configurar. Se pueden completar en `config.js`.
 
-## Configuración actual
+## Eventos
+En `config.js`, añade objetos a `events` con `date` en formato `AAAA-MM-DD`, `child` con la clave del niño (o `all` para todos), `title` e `icon` opcional.
 
-### Adrián
-- Uniforme: lunes y miércoles
-- Chándal: martes, jueves y viernes
-- Piscina: viernes
-- Taekwondo: lunes, miércoles y viernes
+Los dos eventos de ejemplo están fechados en 2026:
+- 10 de octubre: excursión de Héctor en la granja.
+- 18 de diciembre: festival de Navidad de Adrián.
 
-### Héctor
-- Uniforme: martes y viernes
-- Chándal: lunes, miércoles y jueves
-- Piscina: lunes
-- Música: jueves
+Sube los cuatro archivos principales al repositorio y publica la rama `main` desde `/ (root)` en Settings → Pages.
 
-Toda la configuración del calendario está en `config.js`, usando nombres de días (`monday`, `tuesday`, etc.) para que sea fácil modificarla.
 
-## Publicar en GitHub Pages
+## Vista de fin de semana
 
-Sube `index.html`, `styles.css`, `config.js` y `script.js` al repositorio y configura GitHub Pages para publicar la rama `main` desde `/ (root)`.
+El calendario muestra de lunes a viernes por defecto. Activa el interruptor **Mostrar fines de semana** para incluir también sábado y domingo. La preferencia queda guardada en el navegador, así que se mantiene al volver a abrir la web en ese mismo dispositivo y navegador.
 
-No necesita Node.js, npm, base de datos ni servidor.
+Los eventos puntuales configurados para sábado o domingo también se muestran al activar la semana completa.
