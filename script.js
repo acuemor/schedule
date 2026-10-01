@@ -2,7 +2,7 @@ const dayNames = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado
 const dayKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const clothingLabels = { tracksuit: { icon: '🏃', label: 'Chándal' }, uniform: { icon: '🧥', label: 'Uniforme de calle' } };
-const activityLabels = { taekwondo: { icon: '🥋', label: 'Taekwondo' }, music: { icon: '🎵', label: 'Música' } };
+const activityLabels = { taekwondo: { icon: '🥋', label: 'Taekwondo' }, music: { icon: '🎵', label: 'Música' }, swimming: { icon: '🏊', label: 'Natación' } };
 let weekOffset = 0;
 const $ = selector => document.querySelector(selector);
 const WEEKEND_STORAGE_KEY = 'familyScheduleShowWeekend';

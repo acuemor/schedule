@@ -4,20 +4,20 @@ const schedule = {
     name: 'Adrián',
     clothing: { uniform: ['monday', 'wednesday'], tracksuit: ['tuesday', 'thursday', 'friday'] },
     pool: ['friday'],
-    activities: { taekwondo: ['monday', 'wednesday', 'friday'] },
+    activities: { taekwondo: ['monday', 'wednesday', 'friday'], swimming: ['saturday'] },
   },
   hector: {
     name: 'Héctor',
     clothing: { tracksuit: ['monday', 'wednesday', 'thursday'], uniform: ['tuesday', 'friday'] },
     pool: ['monday'],
-    activities: { music: ['thursday'] },
+    activities: { music: ['thursday'], swimming: ['saturday'] },
   },
   // Rodrigo queda creado; completa sus días cuando quieras.
   rodrigo: {
     name: 'Rodrigo',
     clothing: { uniform: [], tracksuit: [] },
     pool: [],
-    activities: {},
+    activities: { swimming: ['saturday'] },
   },
 };
 
@@ -43,4 +43,7 @@ const events = [
   { date: '2026-10-12', child: 'adrian', title: 'Riotinto', icon: '🚌' },
   { date: '2026-10-12', child: 'hector', title: 'Riotinto', icon: '🚌' },
   { date: '2026-10-12', child: 'rodrigo', title: 'Riotinto', icon: '🚌' },
+  { date: '2026-10-02', child: 'adrian', title: 'Cumple de Mateo', icon: '🎉' },
+  { date: '2026-10-02', child: 'hector', title: 'Cumple de Mateo', icon: '🎉' },
+  { date: '2026-10-02', child: 'rodrigo', title: 'Cumple de Mateo', icon: '🎉' },
 ];
