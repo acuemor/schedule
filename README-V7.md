@@ -1,4 +1,4 @@
-# La semana familiar — v7
+# La semana familiar — v8
 
 Esta versión añade **Abel y Raquel como adultos** y convierte el calendario en un calendario de personas.
 
@@ -39,3 +39,28 @@ No sustituyas ni borres el proyecto Supabase.
 ## Siguiente evolución
 
 Esta estructura deja preparada la aplicación para evolucionar posteriormente hacia familias independientes/multiusuario.
+
+
+## v8 — Fotos y calendario más limpio
+
+- Cada persona puede tener una foto en `images/`.
+- El calendario usa la foto en el mismo espacio de 28x28 px que ocupaba el avatar.
+- Si la foto no existe, se oculta y no rompe el diseño.
+- En cada día solo aparecen las personas que tienen algo ese día:
+  - niño: ropa, piscina, extraescolar o evento;
+  - adulto: evento;
+  - eventos familiares siguen apareciendo aunque nadie individual tenga un evento.
+- El resumen “Hoy” aplica exactamente el mismo filtro.
+- Los datos existentes de Supabase se conservan.
+
+### Nombres de las fotos
+
+La v8 espera inicialmente:
+
+- `images/abel.jpg`
+- `images/raquel.jpg`
+- `images/adrian.jpg`
+- `images/hector.jpg`
+- `images/rodrigo.jpg`
+
+Si tus archivos tienen otros nombres o extensiones, cambia únicamente la propiedad `image` de cada persona en `config.js`.

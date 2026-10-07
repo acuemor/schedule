@@ -55,10 +55,11 @@
         const person = raw || {};
         const adult = person.type === 'adult';
         result[key] = adult
-          ? { name: person.name || key, type: 'adult' }
+          ? { name: person.name || key, type: 'adult', image: person.image || `images/${slugify(person.name || key)}.jpg` }
           : {
               name: person.name || key,
               type: 'child',
+              image: person.image || `images/${slugify(person.name || key)}.jpg`,
               clothing: {
                 uniform: [...(person.clothing?.uniform || [])],
                 tracksuit: [...(person.clothing?.tracksuit || [])],
@@ -70,10 +71,16 @@
 
       // Migración: cualquier persona existente sin "type" se considera niño.
       // Añadimos a Abel y Raquel solo si todavía no existen.
-      if (!result.abel) result.abel = { name: 'Abel', type: 'adult' };
-      else result.abel.type = 'adult';
-      if (!result.raquel) result.raquel = { name: 'Raquel', type: 'adult' };
-      else result.raquel.type = 'adult';
+      if (!result.abel) result.abel = { name: 'Abel', type: 'adult', image: 'images/abel.jpg' };
+      else {
+        result.abel.type = 'adult';
+        result.abel.image ||= 'images/abel.jpg';
+      }
+      if (!result.raquel) result.raquel = { name: 'Raquel', type: 'adult', image: 'images/raquel.jpg' };
+      else {
+        result.raquel.type = 'adult';
+        result.raquel.image ||= 'images/raquel.jpg';
+      }
 
       return result;
     }
@@ -314,13 +321,27 @@
         .join('');
     }
 
+    function personHasContent(personKey, day, date) {
+      const person = currentSchedule[personKey];
+      if (!person) return false;
+      if (eventsFor(date).some(event => event.person === personKey)) return true;
+      if (isAdult(person)) return false;
+
+      return Boolean(
+        clothingFor(personKey, day) ||
+        (person.pool || []).includes(day) ||
+        activitiesFor(personKey, day).length
+      );
+    }
+
     function personMarkup(personKey, day, date) {
       const person = currentSchedule[personKey];
       const adult = isAdult(person);
+      const photo = person.image || `images/${slugify(person.name)}.jpg`;
 
       if (adult) {
         return `<div class="child adult-person">
-          <div class="child-name"><span class="avatar">👤</span>${escapeHtml(person.name)}</div>
+          <div class="child-name"><img class="avatar-photo" src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.hidden=true"> <span class="avatar-fallback">👤</span>${escapeHtml(person.name)}</div>
           ${eventMarkup(personKey, date)}
         </div>`;
       }
@@ -334,8 +355,8 @@
       }).join('');
 
       return `<div class="child">
-        <div class="child-name"><span class="avatar">👦</span>${escapeHtml(person.name)}</div>
-        ${info ? `<div class="clothing ${clothing}">${info.icon} ${info.label}</div>` : '<div class="not-configured">Ropa sin configurar</div>'}
+        <div class="child-name"><img class="avatar-photo" src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.hidden=true"> <span class="avatar-fallback">👦</span>${escapeHtml(person.name)}</div>
+        ${info ? `<div class="clothing ${clothing}">${info.icon} ${info.label}</div>` : ''}
         ${pool ? '<div class="pool">🏊 Piscina</div>' : ''}
         ${activities}
         ${eventMarkup(personKey, date)}
@@ -352,29 +373,31 @@
       }
 
       const day = dayKeys[idx];
-      const people = Object.keys(currentSchedule).map(key => {
-        const person = currentSchedule[key];
-        const details = [];
+      const people = Object.keys(currentSchedule)
+        .filter(key => personHasContent(key, day, today))
+        .map(key => {
+          const person = currentSchedule[key];
+          const details = [];
 
-        if (!isAdult(person)) {
-          const clothes = clothingLabels[clothingFor(key, day)];
-          if (clothes) details.push(`${clothes.icon} ${clothes.label}`);
-          if ((person.pool || []).includes(day)) details.push('🏊 Piscina');
-          activitiesFor(key, day).forEach(activity => {
-            const x = activityInfo(activity);
-            details.push(`${x.icon} ${x.label}`);
+          if (!isAdult(person)) {
+            const clothes = clothingLabels[clothingFor(key, day)];
+            if (clothes) details.push(`${clothes.icon} ${clothes.label}`);
+            if ((person.pool || []).includes(day)) details.push('🏊 Piscina');
+            activitiesFor(key, day).forEach(activity => {
+              const x = activityInfo(activity);
+              details.push(`${x.icon} ${x.label}`);
+            });
+          }
+
+          eventsFor(today).filter(event => event.person === key).forEach(event => {
+            details.push(`${event.icon || '📌'} ${event.title}`);
           });
-        }
 
-        eventsFor(today).filter(event => event.person === key).forEach(event => {
-          details.push(`${event.icon || '📌'} ${event.title}`);
-        });
-
-        return `<div class="summary-person">
-          <strong>${escapeHtml(person.name)}</strong>
-          <div class="summary-details">${details.length ? details.map(x => `<span>${escapeHtml(x)}</span>`).join('') : '<span>Sin eventos hoy</span>'}</div>
-        </div>`;
-      }).join('');
+          return `<div class="summary-person">
+            <strong>${escapeHtml(person.name)}</strong>
+            <div class="summary-details">${details.map(x => `<span>${escapeHtml(x)}</span>`).join('')}</div>
+          </div>`;
+        }).join('');
 
       const shared = eventsFor(today)
         .filter(event => event.person === 'all')
@@ -409,7 +432,9 @@
 
         return `<article class="day-card ${isToday ? 'is-today' : ''}">
           <header class="day-header"><div class="day-name">${dayNames[idx]}</div><div class="day-number">${date.getDate()}${isToday ? '<span class="today-label">HOY</span>' : ''}</div></header>
-          <div class="children">${Object.keys(currentSchedule).map(key => personMarkup(key, day, date)).join('')}</div>
+          <div class="children">${Object.keys(currentSchedule)
+            .filter(key => personHasContent(key, day, date))
+            .map(key => personMarkup(key, day, date)).join('')}</div>
           ${shared ? `<div class="shared-events">${shared}</div>` : ''}
         </article>`;
       }).join('');
@@ -546,8 +571,8 @@
       while (currentSchedule[key]) key = `${base}-${suffix++}`;
 
       currentSchedule[key] = type === 'adult'
-        ? { name: name.trim(), type: 'adult' }
-        : { name: name.trim(), type: 'child', clothing: { uniform: [], tracksuit: [] }, pool: [], activities: {} };
+        ? { name: name.trim(), type: 'adult', image: `images/${key}.jpg` }
+        : { name: name.trim(), type: 'child', image: `images/${key}.jpg`, clothing: { uniform: [], tracksuit: [] }, pool: [], activities: {} };
 
       if (await persistConfig()) {
         renderPeopleEditor();
